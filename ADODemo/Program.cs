@@ -13,12 +13,12 @@ namespace ADODemo
         {
    
             EmployeeRepository model = new EmployeeRepository();
-            model.Name = 'Vishu';
+            model.Name = "vaishu";
             model.id = 7;
-            model.Basic_pay = 1234;
+            
 
 
-            EmployeeRepository.AddEmployee(model);
+            EmployeeRepository.DeleteEmployee(model);
 
             Console.ReadLine();
 

@@ -118,5 +118,40 @@ namespace ADODemo
 
         }
 
+        public static void DeleteEmployee(EmployeePayRoll model)
+        {
+            try
+            {
+
+
+                sqlConnection = new SqlConnection(connectionString);
+                SqlCommand command = new SqlCommand("spDeleteEmployee", sqlConnection);
+                command.CommandType = CommandType.StoredProcedure;
+                sqlConnection.Open();
+                command.Parameters.AddWithValue("@Name", model.Name);
+
+                command.Parameters.AddWithValue("@id", model.id);
+                int num = command.ExecuteNonQuery();
+                if (num != 0)
+
+                    Console.WriteLine("Employee Updated Successfully");
+                else
+                    Console.WriteLine("Something went Wrong");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+
+            }
+
+            finally
+            {
+                Console.WriteLine("connection is wrong");
+            }
+
+        }
+
+
+
     }
 }
