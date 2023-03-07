@@ -11,7 +11,10 @@ namespace ADODemo
     {
         static void Main(string[] args)
         {
+   
             EmployeeRepository model = new EmployeeRepository();
+            EmployeeRepository.AddEmployee(model);
+
             Console.ReadLine();
 
         }
