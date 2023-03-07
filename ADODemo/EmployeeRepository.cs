@@ -14,15 +14,41 @@ namespace ADODemo
         public static SqlConnection sqlConnection = null;
         public static void GetAllEmployees()
         {
+            try
+            {
+                sqlConnection = new SqlConnection(connectionString);
+                string query = "select*from Employee_PayRoll";
+                SqlCommand sqlCommand = new SqlCommand(query, sqlConnection);
+                EmployeePayRoll model = new EmployeePayRoll();
+                sqlConnection.Open();
+                SqlDataReader reader = sqlCommand.ExecuteReader();
+                if (reader.HasRows)
+                {
 
-            sqlConnection = new SqlConnection(connectionString);
-            string query = "select*from Employee_PayRoll";
-            SqlCommand sqlCommand = new SqlCommand(query, sqlConnection);
-            EmployeePayRoll model = new EmployeePayRoll();
-            sqlConnection.Open();
-            SqlDataReader reader = sqlCommand.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        model.id = Convert.ToInt32(reader["id"] == DBNull.Value ? default : reader["id"]);
+                        model.Name = reader["Name"] == DBNull.Value ? default : reader["Name"].ToString();
+                        model.Basic_Pay = Convert.ToString(reader["Basic_Pay"] == DBNull.Value ? default : reader["Basic_Pay"]);
+                        model.StartDate = (DateTime)((reader["startDate"] == DBNull.Value ? default : reader["StartDate"]));
+                        model.Gender = reader["Gender"] == DBNull.Value ? default : reader["Gender"].ToString();
+                        // model.PhoneNumber = Convert.ToDouble(reader["Phone"]);
+                        model.Phone_Number = Convert.ToInt32(reader["Phone_Number"] == DBNull.Value ? default : reader["Phone_Number"]);
+                        model.Emp_DEPT = reader["Emp_DEPT"] == DBNull.Value ? default : reader["Emp_DEPT"].ToString();
+                        model.Emp_Address = reader["Emp_Address"] == DBNull.Value ? default : reader["Emp_Address"].ToString();
+                        model.Taxable_Pay = Convert.ToInt64(reader["Taxable_Pay"] == DBNull.Value ? default : reader["Taxable_Pay"]);
+                        model.Deduction = Convert.ToInt64(reader["Deduction"] == DBNull.Value ? default : reader["Deduction"]);
+                        model.Net_Pay = Convert.ToInt64(reader["Net_Pay"] == DBNull.Value ? default : reader["Net_Pay"]);
+                        model.Income_Tax = Convert.ToInt64(reader["Income_Tax"] == DBNull.Value ? default : reader["Income_Tax"]);
+                        Console.WriteLine("{0},{1},{3},{4},{5},{6},{7},model.id,model.Name,model.Basic_Pay,model.StartDate,model.Gender,model.Phone_Number,model.Deparment,model.Emp_Address,model.Taxable_Pay,model.Deduction,model.Net_Pay,model.Income_Tax");
+                    }
+                }
+            }
 
-
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
         }
     }
 }
